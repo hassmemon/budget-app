@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import Chart from './components/Chart';
+import Form from './components/Form';
+import List from './components/List';
 
 function App() {
     return (
@@ -12,6 +14,9 @@ function App() {
 
             <div className='grid md:grid-cols-2 gap-4'>
                 <Chart></Chart>
+            </div>
+            <div>
+                <Form></Form>
             </div>
         </div>
     );
