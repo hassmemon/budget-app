@@ -1,37 +1,46 @@
-// Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const baseURI = 'http://localhost:8080'
+const baseURI = 'http://localhost:8080';
 
-// Define a service using a base URL and expected endpoints
 export const apiSlice = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: baseURI }),
     endpoints: (builder) => ({
-        getCategory: builder.query({
+        // get categories
+        getCategories: builder.query({
+            // get: 'http://localhost:8080/api/categories'
             query: () => '/api/categories',
-            providesTags: ['categories']
+            providesTags: ['categories'],
         }),
+
+        // get labels
         getLabels: builder.query({
+            // get: 'http://localhost:8080/api/labels'
             query: () => '/api/labels',
-            providesTags: ['transaction']
+            providesTags: ['transaction'],
         }),
+
+        // add new Transaction
         addTransaction: builder.mutation({
             query: (initialTransaction) => ({
-            url:'/api/transaction',
-            method: "POST",
-            body: initialTransaction }),
+                // post: 'http://localhost:8080/api/transaction'
+                url: '/api/transaction',
+                method: 'POST',
+                body: initialTransaction,
+            }),
             invalidatesTags: ['transaction'],
-        deleteTransaction: builder.mutation({
-            query: recordID => ({
-            url: '/api/transaction',
-            method: "DELETE",
-            body: recordID
         }),
-        invalidatesTags: ['transaction']
+
+        // delete record
+        deleteTransaction: builder.mutation({
+            query: (recordId) => ({
+                // delete: 'http://localhost:8080/api/transaction'
+                url: '/api/transaction',
+                method: 'DELETE',
+                body: recordId,
+            }),
+            invalidatesTags: ['transaction'],
         }),
     }),
-})
+});
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export default apiSlice;
